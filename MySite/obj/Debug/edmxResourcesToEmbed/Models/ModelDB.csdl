@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBS" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="userdatas">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="id_users" Type="Int32" Nullable="false" />
+    <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="surname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="users" Relationship="Self.userdatas_fk0" FromRole="userdatas" ToRole="users" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="active" Type="Int32" Nullable="false" />
+    <Property Name="dateAdd" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="userdatas" Relationship="Self.userdatas_fk0" FromRole="users" ToRole="userdatas" />
+  </EntityType>
+  <Association Name="userdatas_fk0">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="userdatas" Type="Self.userdatas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="userdatas">
+        <PropertyRef Name="id_users" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DB" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="userdatas" EntityType="Self.userdatas" />
+    <EntitySet Name="users" EntityType="Self.users" />
+    <AssociationSet Name="userdatas_fk0" Association="Self.userdatas_fk0">
+      <End Role="users" EntitySet="users" />
+      <End Role="userdatas" EntitySet="userdatas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

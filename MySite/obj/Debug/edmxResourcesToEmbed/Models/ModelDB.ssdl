@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="DBS.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="userdatas">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="id_users" Type="int" Nullable="false" />
+    <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="surname" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="users">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="login" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="password" Type="text" Nullable="false" />
+    <Property Name="active" Type="int" Nullable="false" />
+    <Property Name="dateAdd" Type="datetime" Nullable="false" />
+  </EntityType>
+  <Association Name="userdatas_fk0">
+    <End Role="users" Type="Self.users" Multiplicity="1" />
+    <End Role="userdatas" Type="Self.userdatas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="users">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="userdatas">
+        <PropertyRef Name="id_users" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="DBSStoreContainer">
+    <EntitySet Name="userdatas" EntityType="Self.userdatas" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="userdatas_fk0" Association="Self.userdatas_fk0">
+      <End Role="users" EntitySet="users" />
+      <End Role="userdatas" EntitySet="userdatas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
