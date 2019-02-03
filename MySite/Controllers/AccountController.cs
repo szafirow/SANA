@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using MySite.Models;
 
 namespace MySite.Controllers
 {
@@ -16,9 +17,12 @@ namespace MySite.Controllers
         */
 
         [HttpGet]
-        public ViewResult Register()
+        public ViewResult Index()
         {
-            return View();
+            DB db = new DB();
+            var kontakty = db.Kontakty;
+
+            return View(kontakty); 
         }
     }
 }
